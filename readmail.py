@@ -35,7 +35,7 @@ def get_bodies_from_label(label):
 
 
 def write_counts_to_csv(bodies, filename):
-    all_email_bodies = TextBlob(" ".join(bodies))
+    all_email_bodies = TextBlob(" ".join(bodies).decode("utf8"))
     interesting = {word: count for word, count in all_email_bodies.word_counts.items() if word not in stops}
     sorted_counts = sorted(interesting.items(), key=operator.itemgetter(1), reverse=True)
     filename = "%s.csv" % filename
