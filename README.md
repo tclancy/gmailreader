@@ -7,3 +7,4 @@ To start: read all mail in one or more labels, extract word cloud and counts, du
 Questions:
 
 * Limit to unread messages?
+* Include subject text along with body?
