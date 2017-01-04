@@ -14,7 +14,9 @@ try:
     from credentials import username, password
 except ImportError:
     logger.error(
-        "You need to create a file named 'credentials.py' in this folder with two variables: username and password")
+        """You need to create a file named 'credentials.py' in this folder with two variables: username and password.
+If you use two-factor authentication with Gmail, you will need to create an application-specific password to use here
+as your normal password will not work. See https://support.google.com/accounts/answer/185833?hl=en for more.""")
 
 
 def get_bodies_from_label(label):
@@ -52,7 +54,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.verbose:
         logger.level = logging.DEBUG
-    g = gmail.login(username, password)
+    try:
+        g = gmail.login(username, password)
+    except gmail.AuthenticationError:
+        logger.error("Unable to connect to the %s account. You may need to use an application-specific password.",
+                     username)
+        sys.exit(1)
     mail_bodies = []
     try:
         stops = set(stopwords.words("english"))
