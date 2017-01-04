@@ -7,8 +7,7 @@ import operator
 import sys
 from textblob import TextBlob
 
-# TODO: set to WARN by default once done with development
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logging.basicConfig(stream=sys.stdout, level=logging.WARN)
 logger = logging.getLogger("Gmail Reader")
 
 try:
@@ -48,8 +47,8 @@ def write_counts_to_csv(bodies, filename):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("labels", nargs="*")
-    parser.add_argument("-v", dest="verbose", action="store_true")
+    parser.add_argument("labels", nargs="*", help="one or more Gmail labels separated by spaces")
+    parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", help="show all logging information")
     args = parser.parse_args()
     if args.verbose:
         logger.level = logging.DEBUG
