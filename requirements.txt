@@ -1,2 +1,2 @@
 textblob==0.11.1
-git+git://github.com/charlierguo/gmail.git#egg=gmail
+git+git://github.com/tclancy/gmail.git#egg=gmail
