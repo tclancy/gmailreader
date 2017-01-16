@@ -52,7 +52,7 @@ def write_counts_to_csv(bodies, filename):
         writer = csv.writer(f)
         writer.writerow(["Word", "Count"])
         for word, count in sorted_counts:
-            writer.writerow([word, count])
+            writer.writerow([unicode(word).encode("utf-8"), count])
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
