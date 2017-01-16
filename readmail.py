@@ -24,7 +24,7 @@ def get_bodies_from_label(label):
     all_mail = []
     mail_bodies = []
     try:
-        all_mail = g.label(label).mail(prefetch=True)
+        all_mail = g.label(label).mail(prefetch=True, skip_attachments=True)
     except AttributeError:
         logger.error("'%s' does not appear to be a valid label-- please check the spelling and case", label)
     for email in all_mail:
