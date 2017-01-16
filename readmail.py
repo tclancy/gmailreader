@@ -28,15 +28,19 @@ def get_bodies_from_label(label):
     except AttributeError:
         logger.error("'%s' does not appear to be a valid label-- please check the spelling and case", label)
     for email in all_mail:
-        logger.info("Reading %s", email.subject)
-        body = email.body
+        logger.info(u"Reading %s", email.subject)
+        try:
+            body = email.body.decode("utf8")
+        except UnicodeDecodeError:
+            logger.warn(u"Skipping %s due to Unicode issues", email.subject)
+            continue
         if body:
             mail_bodies.append(body)
     return mail_bodies
 
 
 def write_counts_to_csv(bodies, filename):
-    all_email_bodies = TextBlob(" ".join(bodies).decode("utf8"))
+    all_email_bodies = TextBlob(" ".join(bodies))
     interesting = {word: count for word, count in all_email_bodies.word_counts.items() if word not in stops}
     sorted_counts = sorted(interesting.items(), key=operator.itemgetter(1), reverse=True)
     filename = "%s.csv" % filename
