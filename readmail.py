@@ -29,6 +29,9 @@ def get_bodies_from_label(label):
         logger.error("'%s' does not appear to be a valid label-- please check the spelling and case", label)
     for email in all_mail:
         logger.info(u"Reading %s", email.subject)
+        if not email.body:
+            logger.warn(u"Skipping %s as it seems to be empty", email.subject)
+            continue
         try:
             body = email.body.decode("utf8")
         except UnicodeDecodeError:
